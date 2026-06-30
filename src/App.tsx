@@ -1,5 +1,22 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { BookOpen, Bot, MessageSquareText, Moon, Plus, Search, Sparkles, Sun, ArrowUp } from "lucide-react";
+import {
+  AudioLines,
+  BarChart3,
+  BookOpen,
+  Bot,
+  Braces,
+  Edit3,
+  Ellipsis,
+  Grid3X3,
+  Lightbulb,
+  Mic,
+  Minus,
+  MoreHorizontal,
+  Plus,
+  Search,
+  ShieldCheck,
+  X
+} from "lucide-react";
 
 type ChatRole = "user" | "assistant";
 
@@ -18,13 +35,15 @@ type ApiChatMessage = {
 
 type ThemeMode = "light" | "dark";
 
-const starterPrompts = [
-  "Who reports directly to Min Cho?",
-  "Show me the reporting chain and key finance leaders supporting GTM strategy.",
-  "Who has experience with forecasting and budgeting?"
-];
+const quickFilters = ["Files", "Emails", "People", "Meetings"];
 
-const agentHighlights = ["Finance insight", "Forecasting guidance", "Planning support"];
+const agentItems = [
+  { label: "Researcher", icon: "researcher" },
+  { label: "Analyst", icon: "analyst" },
+  { label: "Data Analysis Partner", icon: "data" },
+  { label: "Power BI Report Assistant", icon: "power" },
+  { label: "Idea Coach", icon: "idea" }
+];
 
 const initialMessages: ChatMessage[] = [
   {
@@ -39,9 +58,7 @@ const initialRecentChats: string[] = [];
 const sidebarNavItems = [
   { id: "new-chat", label: "New chat", icon: Plus },
   { id: "search", label: "Search", icon: Search },
-  { id: "library", label: "Library", icon: BookOpen },
-  { id: "agents", label: "Agents", icon: Bot },
-  { id: "alice", label: "ALICE", icon: Bot }
+  { id: "library", label: "Library", icon: BookOpen }
 ];
 
 export default function App() {
@@ -153,27 +170,44 @@ export default function App() {
     inputRef.current?.focus();
   }
 
+  function renderAgentIcon(icon: string) {
+    if (icon === "analyst") {
+      return (
+        <span className="agent-icon analyst-icon" aria-hidden="true">
+          <BarChart3 size={15} />
+        </span>
+      );
+    }
+
+    if (icon === "data" || icon === "power") {
+      return (
+        <span className="agent-icon code-icon" aria-hidden="true">
+          <Braces size={15} />
+        </span>
+      );
+    }
+
+    if (icon === "idea") {
+      return (
+        <span className="agent-icon idea-icon" aria-hidden="true">
+          <Lightbulb size={15} />
+        </span>
+      );
+    }
+
+    return <span className="agent-icon researcher-icon" aria-hidden="true" />;
+  }
+
   return (
     <main className="app-shell">
       <aside className="sidebar" aria-label="Past chats">
         <div className="sidebar-top">
           <div className="brand-pill">
             <img className="brand-image" src="/copilot_brand.png" alt="Copilot logo" />
-            <h2>Copilot</h2>
           </div>
-          <div className="top-actions">
-            <button
-              className="sidebar-button theme-toggle"
-              type="button"
-              aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-              onClick={() => setTheme((current) => (current === "dark" ? "light" : "dark"))}
-            >
-              {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
-            </button>
-            <button className="sidebar-button" type="button" aria-label="New chat" onClick={startNewChat}>
-              <Plus size={16} />
-            </button>
-          </div>
+          <button className="icon-button app-grid-button" type="button" aria-label="Apps">
+            <Grid3X3 size={19} strokeWidth={2.2} />
+          </button>
         </div>
 
         <div className="sidebar-section nav-section">
@@ -186,113 +220,220 @@ export default function App() {
                 key={item.id}
                 type="button"
                 className={`sidebar-link ${item.id === "new-chat" ? "primary" : ""} ${isActive ? "active" : ""}`}
-                onClick={() => {
-                  if (item.id === "new-chat") {
-                    startNewChat();
+              onClick={() => {
+                if (item.id === "new-chat") {
+                  startNewChat();
                   } else {
                     setActiveSidebarItem(item.id);
                   }
-                }}
-              >
-                <Icon size={16} />
+              }}
+            >
+                <span className={`nav-icon ${item.id === "new-chat" ? "new-chat-icon" : ""}`}>
+                  <Icon size={item.id === "library" ? 18 : 17} strokeWidth={1.8} />
+                </span>
                 <span>{item.label}</span>
               </button>
             );
           })}
         </div>
 
-        <div className="sidebar-section">
+        <div className="sidebar-section agents-section">
+          <p className="section-label">Agents</p>
+          <div className="agent-list">
+            {agentItems.map((agent) => (
+              <button key={agent.label} type="button" className="agent-link">
+                {renderAgentIcon(agent.icon)}
+                <span>{agent.label}</span>
+              </button>
+            ))}
+            <button type="button" className="agent-link">
+              <span className="agent-icon line-icon" aria-hidden="true">
+                <Bot size={18} />
+              </span>
+              <span>New agent</span>
+            </button>
+            <button type="button" className="agent-link">
+              <span className="agent-icon plain-icon" aria-hidden="true">
+                <Ellipsis size={18} />
+              </span>
+              <span>More agents</span>
+            </button>
+          </div>
+        </div>
+
+        <div className="sidebar-section chats-section">
           <p className="section-label">Chats</p>
-          <div className="chat-list">
-            {recentChats.length === 0 ? (
-              <div className="chat-empty">No chats yet</div>
-            ) : (
-              recentChats.map((chat) => (
+          {recentChats.length > 0 && (
+            <div className="chat-list">
+              {recentChats.map((chat) => (
                 <button key={chat} type="button" className="chat-item">
-                  <MessageSquareText size={14} />
                   <span>{chat}</span>
                 </button>
-              ))
-            )}
-          </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="profile-row">
+          <span className="avatar">CM</span>
+          <span>Cho, Min</span>
+          <button className="icon-button profile-menu" type="button" aria-label="Profile options">
+            <MoreHorizontal size={18} />
+          </button>
         </div>
       </aside>
 
       <section className="chat-panel" aria-label="Chat">
-        <div className="message-stream" aria-live="polite">
-          {messages.length === 1 && (
-            <div className="welcome-card">
-              <div className="welcome-card-top">
-                <div className="welcome-icon">
-                  <Sparkles size={18} />
-                </div>
-                <div className="agent-pill">Agent</div>
-              </div>
-              <h2>How can I help?</h2>
-              <p>Ask a question and I’ll respond with a simple, local answer.</p>
-              <div className="agent-section">
-                <div className="agent-summary">
-                  <p className="agent-label">Finance Research Assistant</p>
-                  <h3>Focused on budgets, forecasting, and GTM finance questions.</h3>
-                </div>
-                <ul className="agent-highlights">
-                  {agentHighlights.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="prompt-row">
-                {starterPrompts.map((prompt) => (
-                  <button key={prompt} type="button" className="prompt-chip" onClick={() => void sendMessage(prompt)}>
-                    {prompt}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {messages.map((message) => (
-            <article className={`message-row ${message.role}`} key={message.id}>
-              <div className="message-bubble">
-                <p>{message.content}</p>
-              </div>
-            </article>
-          ))}
-
-          {isSending && (
-            <article className="message-row assistant">
-              <div className="message-bubble typing">
-                <span />
-                <span />
-                <span />
-              </div>
-            </article>
-          )}
-        </div>
-
-        <form className="composer" onSubmit={handleSubmit}>
-          <div className="composer-input-wrap">
-            <button type="button" className="attach-button" aria-label="Attach file">
-              <Plus size={16} />
+        <header className="workspace-topbar">
+          <div className="mode-toggle" aria-label="Mode">
+            <button type="button" className="mode-button active">
+              Work
             </button>
-            <textarea
-              ref={inputRef}
-              value={input}
-              rows={1}
-              placeholder="Message Copilot"
-              onChange={(event) => setInput(event.target.value)}
-              onKeyDown={(event) => {
-                if (event.key === "Enter" && !event.shiftKey) {
-                  event.preventDefault();
-                  void sendMessage(input);
-                }
-              }}
-            />
-            <button type="submit" className="send-button" disabled={!canSend} aria-label="Send message">
-              <ArrowUp size={18} />
+            <button type="button" className="mode-button">
+              Web
             </button>
           </div>
-        </form>
+
+          <div className="right-toolbar">
+            <button
+              className={`switch-button ${theme === "dark" ? "on" : ""}`}
+              type="button"
+              aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+              onClick={() => setTheme((current) => (current === "dark" ? "light" : "dark"))}
+            >
+              <span />
+            </button>
+            <button className="auto-button" type="button">
+              Auto
+              <span aria-hidden="true">⌄</span>
+            </button>
+            <div className="compose-split">
+              <button className="compose-button" type="button" aria-label="New message" onClick={startNewChat}>
+                <Edit3 size={17} />
+              </button>
+              <button className="compose-chevron" type="button" aria-label="More compose options">
+                ⌄
+              </button>
+            </div>
+            <button className="icon-button status-button" type="button" aria-label="Security status">
+              <ShieldCheck size={18} />
+            </button>
+            <button className="icon-button" type="button" aria-label="More options">
+              <MoreHorizontal size={19} />
+            </button>
+          </div>
+
+          <div className="window-controls" aria-hidden="true">
+            <Minus size={16} />
+            <span className="window-square" />
+            <X size={16} />
+          </div>
+        </header>
+
+        <div className="workspace-body">
+          {messages.length === 1 ? (
+            <div className="home-layout">
+              <h1>What can I help you with?</h1>
+
+              <form className="composer" onSubmit={handleSubmit}>
+                <div className="composer-input-wrap">
+                  <textarea
+                    ref={inputRef}
+                    value={input}
+                    rows={1}
+                    placeholder="Message Copilot"
+                    onChange={(event) => setInput(event.target.value)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" && !event.shiftKey) {
+                        event.preventDefault();
+                        void sendMessage(input);
+                      }
+                    }}
+                  />
+                  <div className="composer-actions">
+                    <button type="button" className="attach-button" aria-label="Attach file">
+                      <Plus size={28} strokeWidth={1.4} />
+                    </button>
+                    <div className="composer-right-actions">
+                      <button type="button" className="mic-button" aria-label="Voice input">
+                        <Mic size={22} strokeWidth={1.9} />
+                      </button>
+                      <button type="submit" className="voice-button" disabled={!canSend} aria-label="Send message">
+                        <AudioLines size={24} strokeWidth={1.8} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+
+              <div className="prompt-row">
+                {quickFilters.map((item) => (
+                  <button key={item} type="button" className="prompt-chip">
+                    {item}
+                  </button>
+                ))}
+                <button type="button" className="prompt-chip icon-chip" aria-label="More suggestions">
+                  <MoreHorizontal size={20} />
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="conversation-layout">
+              <div className="message-stream" aria-live="polite">
+                {messages
+                  .filter((message) => message.id !== "welcome")
+                  .map((message) => (
+                    <article className={`message-row ${message.role}`} key={message.id}>
+                      <div className="message-bubble">
+                        <p>{message.content}</p>
+                      </div>
+                    </article>
+                  ))}
+
+                {isSending && (
+                  <article className="message-row assistant">
+                    <div className="message-bubble typing">
+                      <span />
+                      <span />
+                      <span />
+                    </div>
+                  </article>
+                )}
+              </div>
+
+              <form className="composer compact-composer" onSubmit={handleSubmit}>
+                <div className="composer-input-wrap">
+                  <textarea
+                    ref={inputRef}
+                    value={input}
+                    rows={1}
+                    placeholder="Message Copilot"
+                    onChange={(event) => setInput(event.target.value)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" && !event.shiftKey) {
+                        event.preventDefault();
+                        void sendMessage(input);
+                      }
+                    }}
+                  />
+                  <div className="composer-actions">
+                    <button type="button" className="attach-button" aria-label="Attach file">
+                      <Plus size={28} strokeWidth={1.4} />
+                    </button>
+                    <div className="composer-right-actions">
+                      <button type="button" className="mic-button" aria-label="Voice input">
+                        <Mic size={22} strokeWidth={1.9} />
+                      </button>
+                      <button type="submit" className="voice-button" disabled={!canSend} aria-label="Send message">
+                        <AudioLines size={24} strokeWidth={1.8} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          )}
+        </div>
       </section>
     </main>
   );
