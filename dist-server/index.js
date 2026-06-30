@@ -8,176 +8,155 @@ const faqResponses = [
     {
         patterns: ["who reports directly to min cho", "direct reports to min cho", "who reports to min cho"],
         answer: [
-            "Min Cho manages three direct reports:",
-            "1. Sam Selin – GTM Consumer Junior Finance Analyst (Calgary)",
-            "2. Amanda Klause – GTM Consumer Finance Analyst (Houston)",
-            "3. Min Cho's manager is Khang Nguyen, placing this team within the Forecasting & Planning organization."
+            "Min Cho currently manages three direct reports:",
+            "",
+            "• Olivia Hart – GTM Finance Summer Intern",
+            "• Sam Selin – GTM Consumer Junior Finance Analyst",
+            "• One additional team member is listed within the reported span of control but is not individually identified in the dataset.",
+            "",
+            "Min Cho is part of the Forecasting & Planning organization and reports to Khang Nguyen."
         ].join("\n")
     },
     {
         patterns: ["reporting chain", "key finance leaders supporting gtm strategy", "gtm finance organization"],
         answer: [
-            "The GTM Finance organization is structured as follows:",
+            "The GTM Finance organization is led by Chikobi Ijomah, Vice President of GTM Finance, who oversees GTM Finance Strategy and Strategic Planning. Above this role are Peyton Robertson, EVP of Finance, and Rod Degautte, President and CEO.",
             "",
-            "• Chikobi Ijomah — VP, GTM Finance",
-            "• Brooke Beggerly — Senior Director, Finance",
-            "• Henry Shan — GTM Finance Director",
-            "• Erich Winkelmann — Senior Finance Manager",
-            "• Khang Nguyen — Finance Manager",
-            "• Min Cho — Senior Finance Analyst",
-            "• Jacob Marko — Senior Finance Analyst",
+            "Key finance leaders supporting GTM strategy include:",
             "",
-            "Key leaders supporting GTM strategy include:",
-            "",
-            "• Chikobi Ijomah — Leads GTM Finance Strategy and GTM Strategic Planning.",
-            "• Brooke Beggerly — Leads GTM Transformation initiatives.",
-            "• Henry Shan — Leads GTM Finance Operations and the GTM Operating Model."
+            "• Chikobi Ijomah – VP, GTM Finance; responsible for GTM Strategic Planning.",
+            "• Brooke Beggerly – Senior Director, Finance; leads Commercial & Consumer Finance and GTM Transformation.",
+            "• Henry Shan – Finance Director; leads GTM Finance Operations and the GTM Operating Model.",
+            "• Hee Lang – Finance Director; leads Finance Transformation initiatives.",
+            "• Erich Winkelmann – Senior Finance Manager; responsible for GTM Commercial Planning."
         ].join("\n")
     },
     {
         patterns: ["experience with forecasting and budgeting", "forecasting and budgeting"],
         answer: [
-            "Several employees have forecasting and budgeting expertise:",
+            "The strongest forecasting and budgeting resources include:",
             "",
-            "• Min Cho",
-            "  Skills: Forecasting, Budgeting, Financial Modeling",
-            "  Project: FY27 Forecast",
-            "• Khang Nguyen",
-            "  Skills: FP&A, Planning, Leadership",
-            "  Project: Annual Budget Process",
-            "• Emmanuel Stevens",
-            "  Skills: KPI Reporting, Forecasting",
-            "  Project: Sales Performance Dashboard",
+            "• Min Cho, who leads Forecasting & Planning and has skills in forecasting, budgeting, and financial modeling while overseeing the FY27 Forecast initiative.",
+            "• Khang Nguyen, who manages Budget & Forecast Management and leads the Annual Budget Process.",
+            "• Olivia Hart, who supports Forecasting & Planning activities through FY27 Budget Data Input work.",
+            "• Emmanuel Stevens, who has forecasting experience through KPI reporting and performance analytics.",
             "",
-            "Min Cho would be the best contact for detailed forecasting methodologies, while Khang Nguyen is likely the strongest resource for organization-wide budgeting processes."
+            "For strategic forecasting discussions, Min Cho and Khang Nguyen would be the best contacts."
         ].join("\n")
     },
     {
         patterns: ["commercial finance expertise", "commercial finance"],
         answer: [
-            "Employees with commercial finance experience include:",
+            "Employees with commercial finance expertise include:",
             "",
-            "• Erich Winkelmann",
-            "  Team Function: GTM Commercial Finance",
-            "  Skills: Commercial Finance, Strategy",
-            "• Brooke Beggerly",
-            "  Team Function: Commercial & Consumer Finance",
-            "  Skills: Enterprise Finance, Leadership",
-            "• Chikobi Ijomah",
-            "  Team Function: GTM Finance Strategy",
-            "  Skills: Strategic Finance, Executive Leadership",
+            "• Erich Winkelmann, whose team function is GTM Commercial Finance and whose current focus is GTM Commercial Planning.",
+            "• Brooke Beggerly, who leads Commercial & Consumer Finance and GTM Transformation initiatives.",
+            "• Chikobi Ijomah, who oversees GTM Finance Strategy and Strategic Planning.",
+            "• Henry Shan, who directs GTM Finance Operations across the organization.",
             "",
-            "These individuals are closely aligned with commercial finance planning, strategy, and transformation initiatives."
+            "These individuals would be strong contacts for commercial finance strategy, planning, and transformation efforts."
         ].join("\n")
     },
     {
         patterns: ["pricing strategy projects", "pricing strategy"],
         answer: [
-            "For pricing strategy initiatives, consider connecting with:",
+            "For pricing strategy initiatives, I recommend connecting with:",
             "",
-            "1. Jacob Marko",
-            "   Team Function: Pricing Strategy",
-            "   Project: Pricing Optimization",
-            "   Skills: Pricing Analytics, Financial Modeling",
-            "2. Khang Nguyen",
-            "   Oversees budget and planning functions that frequently support pricing decisions.",
-            "3. Erich Winkelmann",
-            "   Commercial finance leader with strategic planning responsibilities.",
+            "• Jacob Marko, Senior Finance Analyst for Pricing Strategy, who leads the Pricing Optimization project and specializes in pricing analytics and financial modeling.",
+            "• Lucas Ramirez, who supports Pricing Planning through price data pulls and analysis.",
+            "• Khang Nguyen, whose budgeting and planning responsibilities frequently intersect with pricing-related decisions.",
             "",
-            "Jacob Marko is the most directly aligned resource for pricing-specific work."
+            "Jacob Marko would be the primary expert for pricing strategy work."
         ].join("\n")
     },
     {
         patterns: ["become a finance manager", "finance manager", "started as an analyst and was promoted internally"],
         answer: [
-            "Examples of employees whose career paths show internal advancement include:",
+            "Several leaders demonstrate successful internal career progression:",
             "",
-            "• Min Cho",
-            "  Current Role: Senior Finance Analyst",
-            "  Career Path: Internal Promotion",
-            "• Khang Nguyen",
-            "  Current Role: Finance Manager",
-            "  Career Path: Internal Promotion",
-            "• Henry Shan",
-            "  Current Role: Finance Director",
-            "  Career Path: Internal Promotion",
+            "• Min Cho advanced to Senior Finance Analyst through internal promotion.",
+            "• Khang Nguyen advanced into a Finance Manager role through internal promotion.",
+            "• Henry Shan progressed into a Finance Director position through the organization's internal leadership pipeline.",
+            "• Hee Lang advanced into Finance Director through an internal leadership track.",
+            "• Chikobi Ijomah progressed into executive leadership through internal promotion.",
             "",
-            "Speaking with Khang Nguyen could be particularly valuable since they progressed into a Finance Manager role through internal advancement."
+            "Khang Nguyen would be particularly valuable to speak with because their career path closely aligns with your goal of becoming a Finance Manager."
         ].join("\n")
     },
     {
         patterns: ["joined the company from external organizations", "external organizations", "external hire"],
         answer: [
-            "The following finance leaders were hired externally:",
+            "Several finance leaders were hired externally and bring experience from other organizations:",
             "",
-            "• Jacob Marko",
-            "  Career Path: External Hire",
-            "  Previous Background: Management Consulting",
-            "• Erich Winkelmann",
-            "  Career Path: External Leadership Hire",
-            "  Previous Background: Former O&G Finance Manager",
-            "• Brooke Beggerly",
-            "  Career Path: External Director Hire",
-            "  Previous Background: Former Deloitte Senior Manager",
+            "• Jacob Marko joined as an external hire following a background in management consulting.",
+            "• Erich Winkelmann joined as an external leadership hire after serving as an Oil & Gas Finance Manager.",
+            "• Brooke Beggerly joined as an external director hire and previously worked as a Deloitte Senior Manager.",
+            "• Rod Degautte joined as an external CEO hire with extensive energy industry leadership experience.",
             "",
-            "These leaders may provide useful perspectives on transitioning into the organization from other industries and companies."
+            "These leaders may offer unique perspectives on transitioning into the organization and leveraging experience gained elsewhere."
         ].join("\n")
     },
     {
         patterns: ["consulting backgrounds", "consulting"],
         answer: [
-            "The strongest consulting-related backgrounds include:",
+            "Leaders with consulting-related experience include:",
             "",
-            "• Jacob Marko",
-            "  Previous Background: Management Consulting",
-            "• Brooke Beggerly",
-            "  Previous Background: Former Deloitte Senior Manager",
+            "• Jacob Marko, whose previous background was in management consulting.",
+            "• Brooke Beggerly, who previously worked as a Deloitte Senior Manager before joining the organization.",
             "",
-            "These individuals may be particularly helpful for discussions around strategic problem-solving, transformation initiatives, and stakeholder management."
+            "Both individuals bring perspectives from advisory and consulting environments that may be valuable for strategic and transformation-focused work."
         ].join("\n")
     },
     {
         patterns: ["new finance analyst in consumer reporting", "consumer reporting", "new finance analyst"],
         answer: [
-            "Recommended connections include:",
+            "If you're new to Consumer Reporting, I recommend connecting with:",
             "",
-            "• Sam Selin",
-            "  Works directly in Consumer Reporting.",
-            "• Min Cho",
-            "  Leads Forecasting & Planning activities and manages Consumer Reporting resources.",
-            "• Khang Nguyen",
-            "  Oversees Budget & Forecast Management and supports broader finance operations.",
+            "• Sam Selin, who works directly in Consumer Reporting and supports Consumer Margin Reporting.",
+            "• Min Cho, who manages Forecasting & Planning activities and oversees reporting resources.",
+            "• Khang Nguyen, who leads Budget & Forecast Management and can provide visibility into broader finance planning initiatives.",
+            "• Liane Wakefeild, who leads Consumer Product Finance and can offer insight into consumer-focused strategic work.",
             "",
-            "Connecting with all three would provide visibility into both day-to-day reporting work and longer-term growth opportunities within the organization."
+            "These connections would help you understand both operational reporting responsibilities and long-term career opportunities within the finance organization."
         ].join("\n")
     },
     {
         patterns: ["consumer finance and leadership roles", "consumer finance", "leadership roles"],
         answer: [
-            "Potential contacts include:",
+            "You may want to connect with:",
             "",
-            "• Liane Wakefeild",
-            "  Team Function: Consumer Product Finance",
-            "  Skills: Product Finance, Team Leadership",
-            "  Manages a team of 16 employees.",
-            "• Brooke Beggerly",
-            "  Team Function: Commercial & Consumer Finance",
-            "  Skills: Enterprise Finance, Leadership",
+            "• Liane Wakefeild, who leads Consumer Product Finance, manages a large team, and is responsible for the Consumer Product Strategy initiative.",
+            "• Brooke Beggerly, who oversees Commercial & Consumer Finance and leads GTM Transformation efforts.",
+            "• Chikobi Ijomah, who brings executive-level leadership experience and oversees GTM Finance Strategy.",
             "",
-            "These leaders combine consumer finance expertise with people leadership experience."
+            "These leaders combine consumer finance knowledge with significant management and strategic leadership responsibilities."
         ].join("\n")
     },
     {
         patterns: ["forecasting-related projects", "forecasting-related", "forecasting projects"],
         answer: [
-            "Several employees are involved in forecasting-related projects:",
+            "Several employees are currently involved in forecasting and planning activities:",
             "",
-            "• Sam Selin works in Consumer Reporting and is currently supporting the Consumer Margin Reporting project.",
-            "• Amanda Klause focuses on Customer Revenue Analysis and is involved in the Revenue Optimization initiative.",
-            "• Liane Wakefeild leads work in Consumer Product Finance and is driving the Consumer Product Strategy project.",
-            "• Brooke Beggerly oversees Commercial & Consumer Finance and is leading the GTM Transformation initiative, which includes consumer finance responsibilities.",
+            "• Min Cho leads the FY27 Forecast initiative.",
+            "• Khang Nguyen leads the Annual Budget Process.",
+            "• Olivia Hart supports FY27 Budget Data Input work as part of Forecasting & Planning Support.",
+            "• Emmanuel Stevens brings forecasting experience through KPI reporting and sales performance analytics.",
             "",
-            "Together, these employees provide expertise across consumer reporting, revenue optimization, consumer product finance, and broader consumer-focused finance strategy. If you're looking to learn more about consumer finance within the organization, Liane Wakefeild and Brooke Beggerly would be strong starting points due to their leadership roles, while Sam Selin and Amanda Klause can provide hands-on perspectives from active consumer-focused projects."
+            "Together, these individuals represent both strategic and operational forecasting expertise within the finance organization."
+        ].join("\n")
+    },
+    {
+        patterns: ["consumer-focused finance projects", "consumer-focused", "consumer finance projects"],
+        answer: [
+            "I found several employees whose current responsibilities and projects are aligned with consumer-focused finance initiatives:",
+            "",
+            "• Sam Selin works in Consumer Reporting and supports the Consumer Margin Reporting project.",
+            "• Amanda Klause focuses on Customer Revenue Analysis and contributes to the Revenue Optimization initiative.",
+            "• Emmanuel Stevens supports Sales Performance Reporting through the Sales Performance Dashboard project.",
+            "• Liane Wakefeild leads Consumer Product Finance and is responsible for the Consumer Product Strategy initiative.",
+            "• Brooke Beggerly oversees Commercial & Consumer Finance and leads the GTM Transformation project, which includes consumer-focused finance initiatives.",
+            "",
+            "Together, these employees provide expertise across consumer reporting, revenue analysis, sales performance, product finance, and consumer-focused finance strategy. For strategic discussions, Liane Wakefeild and Brooke Beggerly would be strong contacts, while Sam Selin, Amanda Klause, and Emmanuel Stevens can provide day-to-day project insights."
         ].join("\n")
     }
 ];
