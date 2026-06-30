@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { MessageSquareText, Moon, Plus, SendHorizontal, Sparkles, Sun } from "lucide-react";
+import { BookOpen, Bot, MessageSquareText, Moon, Plus, Search, Sparkles, Sun, ArrowUp } from "lucide-react";
 
 type ChatRole = "user" | "assistant";
 
@@ -36,13 +36,20 @@ const initialMessages: ChatMessage[] = [
 ];
 
 const initialRecentChats: string[] = [];
-const sidebarSections = ["Explore", "Library", "Recent"];
+const sidebarNavItems = [
+  { id: "new-chat", label: "New chat", icon: Plus },
+  { id: "search", label: "Search", icon: Search },
+  { id: "library", label: "Library", icon: BookOpen },
+  { id: "agents", label: "Agents", icon: Bot },
+  { id: "alice", label: "ALICE", icon: Bot }
+];
 
 export default function App() {
   const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
   const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [recentChats, setRecentChats] = useState<string[]>(initialRecentChats);
+  const [activeSidebarItem, setActiveSidebarItem] = useState("new-chat");
   const [theme, setTheme] = useState<ThemeMode>(() => {
     if (typeof window === "undefined") {
       return "light";
@@ -142,6 +149,7 @@ export default function App() {
 
     setMessages(initialMessages);
     setInput("");
+    setActiveSidebarItem("new-chat");
     inputRef.current?.focus();
   }
 
@@ -168,23 +176,44 @@ export default function App() {
           </div>
         </div>
 
-        <div className="sidebar-section">
-          {sidebarSections.map((item) => (
-            <button key={item} type="button" className="sidebar-link">
-              {item}
-            </button>
-          ))}
+        <div className="sidebar-section nav-section">
+          {sidebarNavItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = activeSidebarItem === item.id;
+
+            return (
+              <button
+                key={item.id}
+                type="button"
+                className={`sidebar-link ${item.id === "new-chat" ? "primary" : ""} ${isActive ? "active" : ""}`}
+                onClick={() => {
+                  if (item.id === "new-chat") {
+                    startNewChat();
+                  } else {
+                    setActiveSidebarItem(item.id);
+                  }
+                }}
+              >
+                <Icon size={16} />
+                <span>{item.label}</span>
+              </button>
+            );
+          })}
         </div>
 
         <div className="sidebar-section">
-          <p className="section-label">Recent</p>
+          <p className="section-label">Chats</p>
           <div className="chat-list">
-            {recentChats.map((chat) => (
-              <button key={chat} type="button" className="chat-item">
-                <MessageSquareText size={14} />
-                <span>{chat}</span>
-              </button>
-            ))}
+            {recentChats.length === 0 ? (
+              <div className="chat-empty">No chats yet</div>
+            ) : (
+              recentChats.map((chat) => (
+                <button key={chat} type="button" className="chat-item">
+                  <MessageSquareText size={14} />
+                  <span>{chat}</span>
+                </button>
+              ))
+            )}
           </div>
         </div>
       </aside>
@@ -242,25 +271,27 @@ export default function App() {
         </div>
 
         <form className="composer" onSubmit={handleSubmit}>
-          <button type="button" className="attach-button" aria-label="Attach file">
-            <Plus size={16} />
-          </button>
-          <textarea
-            ref={inputRef}
-            value={input}
-            rows={1}
-            placeholder="Message Copilot"
-            onChange={(event) => setInput(event.target.value)}
-            onKeyDown={(event) => {
-              if (event.key === "Enter" && !event.shiftKey) {
-                event.preventDefault();
-                void sendMessage(input);
-              }
-            }}
-          />
-          <button type="submit" disabled={!canSend} aria-label="Send message">
-            <SendHorizontal size={18} />
-          </button>
+          <div className="composer-input-wrap">
+            <button type="button" className="attach-button" aria-label="Attach file">
+              <Plus size={16} />
+            </button>
+            <textarea
+              ref={inputRef}
+              value={input}
+              rows={1}
+              placeholder="Message Copilot"
+              onChange={(event) => setInput(event.target.value)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" && !event.shiftKey) {
+                  event.preventDefault();
+                  void sendMessage(input);
+                }
+              }}
+            />
+            <button type="submit" className="send-button" disabled={!canSend} aria-label="Send message">
+              <ArrowUp size={18} />
+            </button>
+          </div>
         </form>
       </section>
     </main>
