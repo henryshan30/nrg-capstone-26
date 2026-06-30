@@ -1,15 +1,5 @@
-import { FormEvent, useMemo, useRef, useState } from "react";
-import {
-  Bot,
-  Check,
-  Copy,
-  Menu,
-  PanelLeft,
-  Plus,
-  SendHorizontal,
-  Sparkles,
-  UserRound
-} from "lucide-react";
+import { FormEvent, useEffect, useRef, useState } from "react";
+import { MessageSquareText, Moon, Plus, SendHorizontal, Sparkles, Sun } from "lucide-react";
 
 type ChatRole = "user" | "assistant";
 
@@ -26,34 +16,50 @@ type ApiChatMessage = {
   createdAt: string;
 };
 
+type ThemeMode = "light" | "dark";
+
 const starterPrompts = [
-  "Summarize the capstone project goals",
-  "Draft an email update for my team",
-  "Give me a plan for building a React dashboard",
-  "Explain how this mock chatbot works"
+  "Who reports directly to Min Cho?",
+  "Show me the reporting chain and key finance leaders supporting GTM strategy.",
+  "Who has experience with forecasting and budgeting?"
 ];
+
+const agentHighlights = ["Finance insight", "Forecasting guidance", "Planning support"];
 
 const initialMessages: ChatMessage[] = [
   {
     id: "welcome",
     role: "assistant",
     content:
-      "Hi, I am your mock Copilot. Ask me to summarize, draft, plan, or explain something and I will return a local simulated response."
+      "Hello! I can answer questions and help with short tasks. Try one of the suggestions below or ask your own question."
   }
 ];
+
+const initialRecentChats: string[] = [];
+const sidebarSections = ["Explore", "Library", "Recent"];
 
 export default function App() {
   const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
   const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
-  const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null);
+  const [recentChats, setRecentChats] = useState<string[]>(initialRecentChats);
+  const [theme, setTheme] = useState<ThemeMode>(() => {
+    if (typeof window === "undefined") {
+      return "light";
+    }
+
+    const storedTheme = window.localStorage.getItem("copilot-theme");
+    return storedTheme === "dark" ? "dark" : "light";
+  });
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const canSend = input.trim().length > 0 && !isSending;
-  const latestAssistantMessage = useMemo(
-    () => [...messages].reverse().find((message) => message.role === "assistant"),
-    [messages]
-  );
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.style.colorScheme = theme;
+    window.localStorage.setItem("copilot-theme", theme);
+  }, [theme]);
 
   async function sendMessage(content: string) {
     const trimmed = content.trim();
@@ -78,18 +84,31 @@ export default function App() {
       });
 
       if (!response.ok) {
-        throw new Error("The mock assistant could not answer right now.");
+        throw new Error("The assistant could not answer right now.");
       }
 
       const data = (await response.json()) as ApiChatMessage;
+      await new Promise((resolve) => window.setTimeout(resolve, 1800));
+
+      const assistantId = crypto.randomUUID();
       setMessages((current) => [
         ...current,
         {
-          id: data.id,
+          id: assistantId,
           role: "assistant",
-          content: data.content
+          content: ""
         }
       ]);
+
+      const lines = data.content.split("\n");
+      for (let index = 0; index < lines.length; index += 1) {
+        await new Promise((resolve) => window.setTimeout(resolve, 220));
+        setMessages((current) =>
+          current.map((message) =>
+            message.id === assistantId ? { ...message, content: lines.slice(0, index + 1).join("\n") } : message
+          )
+        );
+      }
     } catch (error) {
       const message = error instanceof Error ? error.message : "Unexpected chat error.";
       setMessages((current) => [
@@ -111,13 +130,16 @@ export default function App() {
     void sendMessage(input);
   }
 
-  async function copyMessage(message: ChatMessage) {
-    await navigator.clipboard.writeText(message.content);
-    setCopiedMessageId(message.id);
-    window.setTimeout(() => setCopiedMessageId(null), 1400);
-  }
+  function startNewChat() {
+    const currentTopic = messages
+      .filter((message) => message.role === "user")
+      .map((message) => message.content.trim())
+      .find(Boolean);
 
-  function resetChat() {
+    if (currentTopic) {
+      setRecentChats((current) => [currentTopic, ...current.filter((item) => item !== currentTopic)].slice(0, 6));
+    }
+
     setMessages(initialMessages);
     setInput("");
     inputRef.current?.focus();
@@ -125,68 +147,84 @@ export default function App() {
 
   return (
     <main className="app-shell">
-      <aside className="sidebar" aria-label="Chat navigation">
-        <div className="brand-row">
-          <span className="brand-mark" aria-hidden="true">
-            <Sparkles size={18} />
-          </span>
-          <div>
-            <strong>Mock Copilot</strong>
-            <span>Local assistant</span>
+      <aside className="sidebar" aria-label="Past chats">
+        <div className="sidebar-top">
+          <div className="brand-pill">
+            <img className="brand-image" src="/brand.png" alt="Copilot brand" />
+            <h2>Copilot</h2>
+          </div>
+          <div className="top-actions">
+            <button
+              className="sidebar-button theme-toggle"
+              type="button"
+              aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+              onClick={() => setTheme((current) => (current === "dark" ? "light" : "dark"))}
+            >
+              {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
+            <button className="sidebar-button" type="button" aria-label="New chat" onClick={startNewChat}>
+              <Plus size={16} />
+            </button>
           </div>
         </div>
 
-        <button className="new-chat-button" type="button" onClick={resetChat}>
-          <Plus size={18} />
-          New chat
-        </button>
-
-        <nav className="prompt-list" aria-label="Suggested prompts">
-          {starterPrompts.map((prompt) => (
-            <button key={prompt} type="button" onClick={() => void sendMessage(prompt)}>
-              {prompt}
+        <div className="sidebar-section">
+          {sidebarSections.map((item) => (
+            <button key={item} type="button" className="sidebar-link">
+              {item}
             </button>
           ))}
-        </nav>
+        </div>
+
+        <div className="sidebar-section">
+          <p className="section-label">Recent</p>
+          <div className="chat-list">
+            {recentChats.map((chat) => (
+              <button key={chat} type="button" className="chat-item">
+                <MessageSquareText size={14} />
+                <span>{chat}</span>
+              </button>
+            ))}
+          </div>
+        </div>
       </aside>
 
-      <section className="chat-panel" aria-label="Mock Copilot chat">
-        <header className="topbar">
-          <button className="icon-button mobile-only" type="button" aria-label="Open menu">
-            <Menu size={20} />
-          </button>
-          <div className="topbar-title">
-            <Bot size={22} />
-            <div>
-              <h1>Mock Microsoft Copilot Chatbot</h1>
-              <p>React frontend with a TypeScript mock API</p>
-            </div>
-          </div>
-          <button className="icon-button" type="button" aria-label="Toggle side panel">
-            <PanelLeft size={20} />
-          </button>
-        </header>
-
+      <section className="chat-panel" aria-label="Chat">
         <div className="message-stream" aria-live="polite">
+          {messages.length === 1 && (
+            <div className="welcome-card">
+              <div className="welcome-card-top">
+                <div className="welcome-icon">
+                  <Sparkles size={18} />
+                </div>
+                <div className="agent-pill">Agent</div>
+              </div>
+              <h2>How can I help?</h2>
+              <p>Ask a question and I’ll respond with a simple, local answer.</p>
+              <div className="agent-section">
+                <div className="agent-summary">
+                  <p className="agent-label">Finance Research Assistant</p>
+                  <h3>Focused on budgets, forecasting, and GTM finance questions.</h3>
+                </div>
+                <ul className="agent-highlights">
+                  {agentHighlights.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="prompt-row">
+                {starterPrompts.map((prompt) => (
+                  <button key={prompt} type="button" className="prompt-chip" onClick={() => void sendMessage(prompt)}>
+                    {prompt}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           {messages.map((message) => (
             <article className={`message-row ${message.role}`} key={message.id}>
-              <div className="avatar" aria-hidden="true">
-                {message.role === "assistant" ? <Sparkles size={18} /> : <UserRound size={18} />}
-              </div>
               <div className="message-bubble">
-                <div className="message-meta">
-                  <strong>{message.role === "assistant" ? "Copilot" : "You"}</strong>
-                  {message.role === "assistant" && (
-                    <button
-                      className="copy-button"
-                      type="button"
-                      onClick={() => void copyMessage(message)}
-                      aria-label="Copy assistant message"
-                    >
-                      {copiedMessageId === message.id ? <Check size={16} /> : <Copy size={16} />}
-                    </button>
-                  )}
-                </div>
                 <p>{message.content}</p>
               </div>
             </article>
@@ -194,9 +232,6 @@ export default function App() {
 
           {isSending && (
             <article className="message-row assistant">
-              <div className="avatar" aria-hidden="true">
-                <Sparkles size={18} />
-              </div>
               <div className="message-bubble typing">
                 <span />
                 <span />
@@ -206,31 +241,27 @@ export default function App() {
           )}
         </div>
 
-        <footer className="composer-wrap">
-          <div className="context-strip">
-            <span>Latest answer</span>
-            <strong>{latestAssistantMessage?.content.split("\n")[0]}</strong>
-          </div>
-
-          <form className="composer" onSubmit={handleSubmit}>
-            <textarea
-              ref={inputRef}
-              value={input}
-              rows={1}
-              placeholder="Message mock Copilot"
-              onChange={(event) => setInput(event.target.value)}
-              onKeyDown={(event) => {
-                if (event.key === "Enter" && !event.shiftKey) {
-                  event.preventDefault();
-                  void sendMessage(input);
-                }
-              }}
-            />
-            <button type="submit" disabled={!canSend} aria-label="Send message">
-              <SendHorizontal size={20} />
-            </button>
-          </form>
-        </footer>
+        <form className="composer" onSubmit={handleSubmit}>
+          <button type="button" className="attach-button" aria-label="Attach file">
+            <Plus size={16} />
+          </button>
+          <textarea
+            ref={inputRef}
+            value={input}
+            rows={1}
+            placeholder="Message Copilot"
+            onChange={(event) => setInput(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" && !event.shiftKey) {
+                event.preventDefault();
+                void sendMessage(input);
+              }
+            }}
+          />
+          <button type="submit" disabled={!canSend} aria-label="Send message">
+            <SendHorizontal size={18} />
+          </button>
+        </form>
       </section>
     </main>
   );
