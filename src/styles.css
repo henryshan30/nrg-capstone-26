@@ -73,8 +73,8 @@ button {
 .icon-button {
   display: inline-grid;
   place-items: center;
-  width: 32px;
-  height: 32px;
+  width: clamp(28px, 2.6vw, 32px);
+  height: clamp(28px, 2.6vw, 32px);
   border: 0;
   border-radius: 8px;
   background: transparent;
@@ -84,6 +84,23 @@ button {
 
 .app-grid-button {
   color: #3a3a3a;
+}
+
+.dot-grid-icon {
+  width: 19px;
+  height: 19px;
+  display: grid;
+  grid-template-columns: repeat(3, 4px);
+  grid-template-rows: repeat(3, 4px);
+  gap: 3.5px;
+  place-content: center;
+}
+
+.dot-grid-icon span {
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: currentColor;
 }
 
 .sidebar-section {
@@ -100,32 +117,45 @@ button {
 .agent-link,
 .chat-item {
   width: 100%;
-  min-height: 41px;
+  min-height: clamp(36px, 3.35vw, 41px);
   border: 0;
   border-radius: 10px;
   background: transparent;
   color: #454545;
   padding: 8px 0;
   text-align: left;
-  font-size: 14px;
+  font-size: clamp(13px, 1.15vw, 14px);
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
 .sidebar-link {
+  position: relative;
   padding-left: 0;
   padding-right: 10px;
 }
 
-.sidebar-link.primary,
-.sidebar-link.active.primary {
+.sidebar-link.active {
   background: #dce8ee;
   color: #1f1f1f;
 }
 
-.sidebar-link.active:not(.primary) {
-  color: #1f1f1f;
+.alice-link {
+  outline: 0;
+}
+
+.alice-link.active {
+  background: #dce8ee;
+}
+
+.alice-link::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 0 -4px;
+  border: 2px solid #e11d48;
+  border-radius: inherit;
+  pointer-events: none;
 }
 
 .sidebar-link:hover,
@@ -136,16 +166,16 @@ button {
 }
 
 .nav-icon {
-  width: 18px;
-  height: 18px;
+  width: clamp(16px, 1.5vw, 18px);
+  height: clamp(16px, 1.5vw, 18px);
   display: inline-grid;
   place-items: center;
   color: #424242;
 }
 
 .new-chat-icon {
-  width: 20px;
-  height: 20px;
+  width: clamp(18px, 1.65vw, 20px);
+  height: clamp(18px, 1.65vw, 20px);
   border-radius: 999px;
   background:
     radial-gradient(circle at 28% 72%, #ffc93b 0 15%, transparent 16%),
@@ -156,6 +186,12 @@ button {
 
 .new-chat-icon svg {
   opacity: 0;
+}
+
+.alice-nav-logo {
+  width: 21px;
+  height: 21px;
+  object-fit: contain;
 }
 
 .section-label {
@@ -176,52 +212,16 @@ button {
 }
 
 .agent-link {
-  min-height: 44px;
+  min-height: clamp(36px, 3.6vw, 44px);
   padding: 6px 0;
 }
 
 .agent-icon {
-  width: 21px;
-  height: 21px;
+  width: clamp(18px, 1.72vw, 21px);
+  height: clamp(18px, 1.72vw, 21px);
   display: inline-grid;
   place-items: center;
   flex: 0 0 auto;
-}
-
-.researcher-icon {
-  border-radius: 999px;
-  background:
-    radial-gradient(circle at 30% 35%, #66f3ee 0 25%, transparent 26%),
-    radial-gradient(circle at 68% 67%, #7d3ce4 0 29%, transparent 30%),
-    linear-gradient(135deg, #2fd6ee, #8859ee 72%);
-}
-
-.analyst-icon {
-  border-radius: 6px;
-  color: white;
-  background:
-    radial-gradient(circle at 72% 24%, #d955e7 0 12%, transparent 13%),
-    radial-gradient(circle at 28% 76%, #43c4f1 0 14%, transparent 15%),
-    linear-gradient(135deg, #ffffff 0%, #ffffff 38%, #f2efff 100%);
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
-}
-
-.analyst-icon svg {
-  color: #d251e6;
-}
-
-.code-icon {
-  border-radius: 6px;
-  color: #ffffff;
-  background: #27a8c8;
-}
-
-.idea-icon {
-  border-radius: 999px;
-  color: #ff9b00;
-  background:
-    radial-gradient(circle at 50% 50%, #fff3d8 0 45%, transparent 46%),
-    linear-gradient(135deg, #fff2a9, #ff7bb6);
 }
 
 .line-icon,
@@ -240,14 +240,14 @@ button {
 }
 
 .chat-item {
-  min-height: 34px;
+  min-height: clamp(30px, 2.8vw, 34px);
   padding: 7px 10px;
   font-size: 13px;
 }
 
 .profile-row {
   margin-top: auto;
-  height: 34px;
+  height: clamp(30px, 2.8vw, 34px);
   display: flex;
   align-items: center;
   gap: 9px;
@@ -256,8 +256,8 @@ button {
 }
 
 .avatar {
-  width: 27px;
-  height: 27px;
+  width: clamp(24px, 2.2vw, 27px);
+  height: clamp(24px, 2.2vw, 27px);
   border-radius: 999px;
   display: inline-grid;
   place-items: center;
@@ -268,8 +268,8 @@ button {
 
 .profile-menu {
   margin-left: auto;
-  width: 25px;
-  height: 25px;
+  width: clamp(23px, 2vw, 25px);
+  height: clamp(23px, 2vw, 25px);
 }
 
 .chat-panel {
@@ -292,7 +292,7 @@ button {
 }
 
 .mode-toggle {
-  height: 37px;
+  height: clamp(32px, 3vw, 37px);
   display: inline-flex;
   border: 1px solid #d2d2d2;
   border-radius: 8px;
@@ -301,13 +301,13 @@ button {
 }
 
 .mode-button {
-  width: 81px;
-  height: 35px;
+  width: clamp(68px, 6.7vw, 81px);
+  height: clamp(30px, 2.85vw, 35px);
   border: 0;
   border-right: 1px solid #d2d2d2;
   background: #ffffff;
   color: #676767;
-  font-size: 15px;
+  font-size: clamp(13px, 1.22vw, 15px);
 }
 
 .mode-button:last-child {
@@ -330,8 +330,8 @@ button {
 }
 
 .switch-button {
-  width: 46px;
-  height: 24px;
+  width: clamp(40px, 3.75vw, 46px);
+  height: clamp(21px, 2vw, 24px);
   border: 1px solid #8a8a8a;
   border-radius: 999px;
   background: #ffffff;
@@ -342,8 +342,8 @@ button {
 }
 
 .switch-button span {
-  width: 18px;
-  height: 18px;
+  width: clamp(15px, 1.48vw, 18px);
+  height: clamp(15px, 1.48vw, 18px);
   border-radius: 999px;
   background: #5a5a5a;
 }
@@ -353,8 +353,8 @@ button {
 }
 
 .auto-button {
-  height: 36px;
-  min-width: 82px;
+  height: clamp(31px, 2.95vw, 36px);
+  min-width: clamp(68px, 6.7vw, 82px);
   border: 1px solid #d1d1d1;
   border-radius: 8px;
   background: #ffffff;
@@ -363,12 +363,12 @@ button {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font-size: 15px;
+  font-size: clamp(13px, 1.22vw, 15px);
   font-weight: 600;
 }
 
 .compose-split {
-  height: 36px;
+  height: clamp(31px, 2.95vw, 36px);
   display: inline-flex;
   overflow: hidden;
   border-radius: 8px;
@@ -385,13 +385,13 @@ button {
 }
 
 .compose-button {
-  width: 38px;
+  width: clamp(33px, 3.1vw, 38px);
   border-right: 1px solid rgba(255, 255, 255, 0.28);
 }
 
 .compose-chevron {
-  width: 28px;
-  font-size: 17px;
+  width: clamp(24px, 2.3vw, 28px);
+  font-size: clamp(15px, 1.4vw, 17px);
   line-height: 1;
 }
 
@@ -434,6 +434,19 @@ button {
   font-weight: 400;
   color: #2e2e2e;
   letter-spacing: 0;
+}
+
+.alice-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.alice-heading-logo {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  flex: 0 0 auto;
 }
 
 .composer {
@@ -493,8 +506,8 @@ button {
 }
 
 .attach-button {
-  width: 31px;
-  height: 31px;
+  width: clamp(28px, 2.55vw, 31px);
+  height: clamp(28px, 2.55vw, 31px);
 }
 
 .composer-right-actions {
@@ -504,13 +517,13 @@ button {
 }
 
 .mic-button {
-  width: 27px;
-  height: 37px;
+  width: clamp(24px, 2.2vw, 27px);
+  height: clamp(32px, 3vw, 37px);
 }
 
 .voice-button {
-  width: 45px;
-  height: 45px;
+  width: clamp(39px, 3.7vw, 45px);
+  height: clamp(39px, 3.7vw, 45px);
   border-radius: 999px;
   background: #f5f5f5;
   color: #4d4d4d;
@@ -530,13 +543,13 @@ button {
 }
 
 .prompt-chip {
-  height: 45px;
+  height: clamp(38px, 3.7vw, 45px);
   border: 1px solid #e4e4e4;
   border-radius: 999px;
   background: #ffffff;
   color: #454545;
-  padding: 0 18px;
-  font-size: 14px;
+  padding: 0 clamp(14px, 1.5vw, 18px);
+  font-size: clamp(13px, 1.15vw, 14px);
   font-weight: 600;
 }
 
@@ -545,7 +558,7 @@ button {
 }
 
 .icon-chip {
-  width: 45px;
+  width: clamp(38px, 3.7vw, 45px);
   padding: 0;
   display: inline-grid;
   place-items: center;
@@ -701,5 +714,24 @@ button {
   .home-layout h1 {
     margin-left: 0;
     font-size: 30px;
+  }
+
+  .alice-heading {
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .alice-heading-logo {
+    width: 34px;
+    height: 34px;
+  }
+
+  .prompt-row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .prompt-chip {
+    height: 38px;
   }
 }

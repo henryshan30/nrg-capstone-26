@@ -1,22 +1,5 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
-import {
-  AudioLines,
-  BarChart3,
-  BookOpen,
-  Bot,
-  Braces,
-  Edit3,
-  Ellipsis,
-  Grid3X3,
-  Lightbulb,
-  Mic,
-  Minus,
-  MoreHorizontal,
-  Plus,
-  Search,
-  ShieldCheck,
-  X
-} from "lucide-react";
+import { AudioLines, BookOpen, Bot, Edit3, Ellipsis, Mic, Minus, MoreHorizontal, Plus, Search, ShieldCheck, X } from "lucide-react";
 
 type ChatRole = "user" | "assistant";
 
@@ -37,14 +20,6 @@ type ThemeMode = "light" | "dark";
 
 const quickFilters = ["Files", "Emails", "People", "Meetings"];
 
-const agentItems = [
-  { label: "Researcher", icon: "researcher" },
-  { label: "Analyst", icon: "analyst" },
-  { label: "Data Analysis Partner", icon: "data" },
-  { label: "Power BI Report Assistant", icon: "power" },
-  { label: "Idea Coach", icon: "idea" }
-];
-
 const initialMessages: ChatMessage[] = [
   {
     id: "welcome",
@@ -58,7 +33,8 @@ const initialRecentChats: string[] = [];
 const sidebarNavItems = [
   { id: "new-chat", label: "New chat", icon: Plus },
   { id: "search", label: "Search", icon: Search },
-  { id: "library", label: "Library", icon: BookOpen }
+  { id: "library", label: "Library", icon: BookOpen },
+  { id: "alice", label: "ALICE", icon: Bot }
 ];
 
 export default function App() {
@@ -78,6 +54,10 @@ export default function App() {
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const canSend = input.trim().length > 0 && !isSending;
+  const homeHeading =
+    activeSidebarItem === "alice"
+      ? "Hi I'm Alice, I help you understand the people behind the organization."
+      : "What can I help you with?";
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -170,32 +150,20 @@ export default function App() {
     inputRef.current?.focus();
   }
 
-  function renderAgentIcon(icon: string) {
-    if (icon === "analyst") {
-      return (
-        <span className="agent-icon analyst-icon" aria-hidden="true">
-          <BarChart3 size={15} />
-        </span>
-      );
+  function startAliceChat() {
+    const currentTopic = messages
+      .filter((message) => message.role === "user")
+      .map((message) => message.content.trim())
+      .find(Boolean);
+
+    if (currentTopic) {
+      setRecentChats((current) => [currentTopic, ...current.filter((item) => item !== currentTopic)].slice(0, 6));
     }
 
-    if (icon === "data" || icon === "power") {
-      return (
-        <span className="agent-icon code-icon" aria-hidden="true">
-          <Braces size={15} />
-        </span>
-      );
-    }
-
-    if (icon === "idea") {
-      return (
-        <span className="agent-icon idea-icon" aria-hidden="true">
-          <Lightbulb size={15} />
-        </span>
-      );
-    }
-
-    return <span className="agent-icon researcher-icon" aria-hidden="true" />;
+    setMessages(initialMessages);
+    setInput("");
+    setActiveSidebarItem("alice");
+    inputRef.current?.focus();
   }
 
   return (
@@ -206,7 +174,17 @@ export default function App() {
             <img className="brand-image" src="/copilot_brand.png" alt="Copilot logo" />
           </div>
           <button className="icon-button app-grid-button" type="button" aria-label="Apps">
-            <Grid3X3 size={19} strokeWidth={2.2} />
+            <span className="dot-grid-icon" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+            </span>
           </button>
         </div>
 
@@ -219,17 +197,23 @@ export default function App() {
               <button
                 key={item.id}
                 type="button"
-                className={`sidebar-link ${item.id === "new-chat" ? "primary" : ""} ${isActive ? "active" : ""}`}
-              onClick={() => {
-                if (item.id === "new-chat") {
-                  startNewChat();
+                className={`sidebar-link ${item.id === "new-chat" ? "primary" : ""} ${item.id === "alice" ? "alice-link" : ""} ${isActive ? "active" : ""}`}
+                onClick={() => {
+                  if (item.id === "new-chat") {
+                    startNewChat();
+                  } else if (item.id === "alice") {
+                    startAliceChat();
                   } else {
                     setActiveSidebarItem(item.id);
                   }
-              }}
-            >
+                }}
+              >
                 <span className={`nav-icon ${item.id === "new-chat" ? "new-chat-icon" : ""}`}>
-                  <Icon size={item.id === "library" ? 18 : 17} strokeWidth={1.8} />
+                  {item.id === "alice" ? (
+                    <img className="alice-nav-logo" src="/ALICE.png" alt="" />
+                  ) : (
+                    <Icon size={item.id === "library" ? 18 : 17} strokeWidth={1.8} />
+                  )}
                 </span>
                 <span>{item.label}</span>
               </button>
@@ -240,12 +224,6 @@ export default function App() {
         <div className="sidebar-section agents-section">
           <p className="section-label">Agents</p>
           <div className="agent-list">
-            {agentItems.map((agent) => (
-              <button key={agent.label} type="button" className="agent-link">
-                {renderAgentIcon(agent.icon)}
-                <span>{agent.label}</span>
-              </button>
-            ))}
             <button type="button" className="agent-link">
               <span className="agent-icon line-icon" aria-hidden="true">
                 <Bot size={18} />
@@ -275,8 +253,8 @@ export default function App() {
         </div>
 
         <div className="profile-row">
-          <span className="avatar">CM</span>
-          <span>Cho, Min</span>
+          <span className="avatar">CE</span>
+          <span>Company Employee</span>
           <button className="icon-button profile-menu" type="button" aria-label="Profile options">
             <MoreHorizontal size={18} />
           </button>
@@ -333,7 +311,10 @@ export default function App() {
         <div className="workspace-body">
           {messages.length === 1 ? (
             <div className="home-layout">
-              <h1>What can I help you with?</h1>
+              <h1 className={activeSidebarItem === "alice" ? "alice-heading" : undefined}>
+                {activeSidebarItem === "alice" && <img className="alice-heading-logo" src="/ALICE.png" alt="" />}
+                <span>{homeHeading}</span>
+              </h1>
 
               <form className="composer" onSubmit={handleSubmit}>
                 <div className="composer-input-wrap">
