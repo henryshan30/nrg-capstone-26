@@ -158,7 +158,7 @@ export default function App() {
       <aside className="sidebar" aria-label="Past chats">
         <div className="sidebar-top">
           <div className="brand-pill">
-            <img className="brand-image" src="/brand.png" alt="Copilot brand" />
+            <img className="brand-image" src="/copilot_brand.png" alt="Copilot logo" />
             <h2>Copilot</h2>
           </div>
           <div className="top-actions">
