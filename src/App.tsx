@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { AudioLines, BookOpen, Bot, Edit3, Ellipsis, Mic, Minus, MoreHorizontal, Plus, Search, ShieldCheck, X } from "lucide-react";
+import { buildMockCopilotReply } from "./mockCopilot";
 
 type ChatRole = "user" | "assistant";
 
@@ -81,17 +82,12 @@ export default function App() {
     setIsSending(true);
 
     try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: nextMessages })
-      });
-
-      if (!response.ok) {
-        throw new Error("The assistant could not answer right now.");
-      }
-
-      const data = (await response.json()) as ApiChatMessage;
+      const data: ApiChatMessage = {
+        id: crypto.randomUUID(),
+        role: "assistant",
+        content: buildMockCopilotReply(trimmed, nextMessages),
+        createdAt: new Date().toISOString()
+      };
       await new Promise((resolve) => window.setTimeout(resolve, 1800));
 
       const assistantId = crypto.randomUUID();
@@ -171,7 +167,7 @@ export default function App() {
       <aside className="sidebar" aria-label="Past chats">
         <div className="sidebar-top">
           <div className="brand-pill">
-            <img className="brand-image" src="/copilot_brand.png" alt="Copilot logo" />
+            <img className="brand-image" src={`${import.meta.env.BASE_URL}copilot_brand.png`} alt="Copilot logo" />
           </div>
           <button className="icon-button app-grid-button" type="button" aria-label="Apps">
             <span className="dot-grid-icon" aria-hidden="true">
@@ -210,7 +206,7 @@ export default function App() {
               >
                 <span className={`nav-icon ${item.id === "new-chat" ? "new-chat-icon" : ""}`}>
                   {item.id === "alice" ? (
-                    <img className="alice-nav-logo" src="/ALICE.png" alt="" />
+                    <img className="alice-nav-logo" src={`${import.meta.env.BASE_URL}ALICE.png`} alt="" />
                   ) : (
                     <Icon size={item.id === "library" ? 18 : 17} strokeWidth={1.8} />
                   )}
@@ -312,7 +308,7 @@ export default function App() {
           {messages.length === 1 ? (
             <div className="home-layout">
               <h1 className={activeSidebarItem === "alice" ? "alice-heading" : undefined}>
-                {activeSidebarItem === "alice" && <img className="alice-heading-logo" src="/ALICE.png" alt="" />}
+                {activeSidebarItem === "alice" && <img className="alice-heading-logo" src={`${import.meta.env.BASE_URL}ALICE.png`} alt="" />}
                 <span>{homeHeading}</span>
               </h1>
 
