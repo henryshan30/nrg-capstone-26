@@ -424,7 +424,7 @@ button {
 }
 
 .home-layout {
-  width: min(902px, calc(100vw - 350px));
+  width: min(1200px, calc(100vw - 360px));
   padding-top: 226px;
 }
 
@@ -566,7 +566,7 @@ button {
 }
 
 .conversation-layout {
-  width: min(902px, calc(100vw - 350px));
+  width: min(1200px, calc(100vw - 360px));
   height: 100%;
   min-height: 0;
   display: grid;
