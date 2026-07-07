@@ -33,6 +33,25 @@ const faqResponses = [
     ].join("\n")
   },
   {
+    patterns: [
+      "who reports directly to erich winkelmann",
+      "reports directly to erich",
+      "direct reports to erich winkelmann",
+      "who reports to erich winkelmann",
+      "reports to erich winkelmann"
+    ],
+    answer: [
+      "Erich Winkelmann oversees the GTM Commercial Finance organization and currently has five direct reports. Based on the available team data, those direct reports include:",
+      "",
+      "• Khang Nguyen – GTM Finance Manager, responsible for Budget & Forecast Management and the Annual Budget Process.",
+      "• Additional members of Erich's organization are reflected in his span of control but are not individually identified in the dataset.",
+      "",
+      "Through Khang Nguyen's team, Erich's organization supports several key functions, including forecasting, planning, budgeting, pricing strategy, and consumer finance initiatives. This includes leaders such as Min Cho (Forecasting & Planning) and Jacob Marko (Pricing Strategy), who manage teams focused on financial planning and strategic analysis.",
+      "",
+      "This structure positions Erich as a key leader connecting commercial finance strategy with operational planning and forecasting activities across the GTM Finance organization."
+    ].join("\n")
+  },
+  {
     patterns: ["reporting chain", "key finance leaders supporting gtm strategy", "gtm finance organization"],
     answer: [
       "The GTM Finance organization is led by Chikobi Ijomah, Vice President of GTM Finance, who oversees GTM Finance Strategy and Strategic Planning. Above this role are Peyton Robertson, EVP of Finance, and Rod Degautte, President and CEO.",
