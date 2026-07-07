@@ -53,6 +53,7 @@ export default function App() {
     return storedTheme === "dark" ? "dark" : "light";
   });
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const messageStreamRef = useRef<HTMLDivElement>(null);
 
   const canSend = input.trim().length > 0 && !isSending;
   const homeHeading =
@@ -65,6 +66,13 @@ export default function App() {
     document.documentElement.style.colorScheme = theme;
     window.localStorage.setItem("copilot-theme", theme);
   }, [theme]);
+
+  useEffect(() => {
+    const stream = messageStreamRef.current;
+    if (stream) {
+      stream.scrollTop = stream.scrollHeight;
+    }
+  }, [messages, isSending]);
 
   async function sendMessage(content: string) {
     const trimmed = content.trim();
@@ -356,7 +364,7 @@ export default function App() {
             </div>
           ) : (
             <div className="conversation-layout">
-              <div className="message-stream" aria-live="polite">
+              <div className="message-stream" aria-live="polite" ref={messageStreamRef}>
                 {messages
                   .filter((message) => message.id !== "welcome")
                   .map((message) => (
