@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { AudioLines, BookOpen, Bot, Edit3, Ellipsis, Mic, Minus, MoreHorizontal, Plus, Search, ShieldCheck, X } from "lucide-react";
+import { AudioLines, BookOpen, Bot, Edit3, Mic, Minus, MoreHorizontal, Plus, Search, ShieldCheck, X } from "lucide-react";
 import { buildMockCopilotReply } from "./mockCopilot";
 
 type ChatRole = "user" | "assistant";
@@ -223,24 +223,6 @@ export default function App() {
               </button>
             );
           })}
-        </div>
-
-        <div className="sidebar-section agents-section">
-          <p className="section-label">Agents</p>
-          <div className="agent-list">
-            <button type="button" className="agent-link">
-              <span className="agent-icon line-icon" aria-hidden="true">
-                <Bot size={18} />
-              </span>
-              <span>New agent</span>
-            </button>
-            <button type="button" className="agent-link">
-              <span className="agent-icon plain-icon" aria-hidden="true">
-                <Ellipsis size={18} />
-              </span>
-              <span>More agents</span>
-            </button>
-          </div>
         </div>
 
         <div className="sidebar-section chats-section">

@@ -41,12 +41,24 @@ const faqResponses = [
       "reports to erich winkelmann"
     ],
     answer: [
-      "Erich Winkelmann oversees the GTM Commercial Finance organization and currently has five direct reports. Based on the available team data, those direct reports include:",
+      "Erich Winkelmann – Director, GTM Commercial Finance",
+      "",
+      "• Span of Control: 5 direct reports, 23 total employees",
+      "• Organization Focus: Forecasting, Planning, Budgeting, Pricing Strategy, and Consumer Finance",
+      "",
+      "Erich's direct reports include:",
       "",
       "• Khang Nguyen – GTM Finance Manager, responsible for Budget & Forecast Management and the Annual Budget Process.",
       "• Additional members of Erich's organization are reflected in his span of control but are not individually identified in the dataset.",
       "",
-      "Through Khang Nguyen's team, Erich's organization supports several key functions, including forecasting, planning, budgeting, pricing strategy, and consumer finance initiatives. This includes leaders such as Min Cho (Forecasting & Planning) and Jacob Marko (Pricing Strategy), who manage teams focused on financial planning and strategic analysis.",
+      "Through these teams, Erich's organization supports forecasting, planning, budgeting, pricing strategy, and consumer finance initiatives — including leaders such as Min Cho (Forecasting & Planning) and Jacob Marko (Pricing Strategy), who manage teams focused on financial planning and strategic analysis.",
+      "",
+      "Current Strategic Initiatives:",
+      "",
+      "• FY2027 Budget Development – leading the annual budget cycle across GTM Commercial Finance, consolidating inputs from the forecasting and planning teams.",
+      "• Pricing Optimization Program – partnering with Jacob Marko's pricing team to refine pricing models and margin targets across product lines.",
+      "• Consumer Margin Enhancement Initiative – driving cross-functional work to improve consumer segment profitability and cost efficiency.",
+      "• Revenue Forecast Automation – modernizing forecast workflows with automated data pipelines to improve accuracy and shorten cycle time.",
       "",
       "This structure positions Erich as a key leader connecting commercial finance strategy with operational planning and forecasting activities across the GTM Finance organization."
     ].join("\n")
@@ -138,7 +150,9 @@ const faqResponses = [
       "• Jacob Marko, whose previous background was in management consulting.",
       "• Brooke Beggerly, who previously worked as a Deloitte Senior Manager before joining the organization.",
       "",
-      "Both individuals bring perspectives from advisory and consulting environments that may be valuable for strategic and transformation-focused work."
+      "Both individuals bring perspectives from advisory and consulting environments that may be valuable for strategic and transformation-focused work.",
+      "",
+      "Their consulting backgrounds may make them valuable connections for employees seeking guidance on strategic problem-solving, business transformation, stakeholder management, and cross-functional initiatives. Building relationships with leaders who have experience in consulting can also help expand internal networks and provide exposure to diverse approaches for tackling complex business challenges."
     ].join("\n")
   },
   {
